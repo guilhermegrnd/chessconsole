@@ -4,11 +4,12 @@ using board;
 namespace ChessConsole {
     class Program {
         static void Main(string[] args) {
-            Position P;
 
-            P = new Position(3, 4);
+            Board b = new Board(8, 8);
 
-            Console.WriteLine(P);
+            Console.WriteLine(b);
+
+            Console.ReadLine();
         }
     }
 }
