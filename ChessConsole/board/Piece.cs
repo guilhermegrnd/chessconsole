@@ -9,11 +9,13 @@ namespace board {
         public int movesMade { get; protected set; }
         public Board board { get; protected set; }
 
-        public Piece(Position position, Board board, Color color) {
-            this.position = position;
+        public Piece(Board board, Color color) {
+            position = null;
             this.board = board;
             this.color = color;
-            this.movesMade = 0;
+            movesMade = 0;
         }
+
+
     }
 }
