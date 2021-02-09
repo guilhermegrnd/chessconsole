@@ -6,13 +6,11 @@ namespace ChessConsole {
     class Program {
         static void Main(string[] args) {
             try {
-                Board b = new Board(8, 8);
+                chessPosition pos = new chessPosition('H', 3);
 
-                b.placePiece(new Rook(b, Color.Black), new Position(0, 0));
-                b.placePiece(new Rook(b, Color.Black), new Position(1, 3));
-                b.placePiece(new King(b, Color.Black), new Position(2, 4));
+                Console.WriteLine(pos);
 
-                Display.printBoard(b);
+                Console.WriteLine(pos.toPosition());
 
                 Console.ReadLine();
             } catch(BoardException e) {
