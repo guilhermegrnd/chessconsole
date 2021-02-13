@@ -6,16 +6,23 @@ namespace ChessConsole {
     class Program {
         static void Main(string[] args) {
             try {
-                Board b = new Board(8, 8);
+                ChessMatch match = new ChessMatch();
 
-                b.placePiece(new Rook(b, Color.White), new Position(0, 0));
-                b.placePiece(new King(b, Color.White), new Position(1, 3));
-                b.placePiece(new Rook(b, Color.Black), new Position(4, 6));
-                b.placePiece(new King(b, Color.Black), new Position(7, 4));
+                while(!match.gameOver) {
+                    Console.Clear();
+                    Display.printBoard(match.board);
 
-                Display.printBoard(b);
+                    Console.WriteLine();
 
-                Console.ReadLine();
+                    Console.Write("Origem: ");
+                    Position origin = Display.getChessPosition().toPosition();
+
+                    Console.Write("Destino: ");
+                    Position destination = Display.getChessPosition().toPosition();
+
+                    match.executeMove(origin, destination);
+                }
+
             } catch(BoardException e) {
                 Console.WriteLine(e.Message);
             }

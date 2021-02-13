@@ -16,6 +16,8 @@ namespace board {
             movesMade = 0;
         }
 
-
+        public void incrementMovesMade() {
+            movesMade++;
+        }
     }
 }

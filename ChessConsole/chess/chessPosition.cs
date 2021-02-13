@@ -1,11 +1,11 @@
 ﻿using board;
 
 namespace chess {
-    class chessPosition {
+    class ChessPosition {
         public char column { get; set; }
         public int row { get; set; }
 
-        public chessPosition(char column, int row) {
+        public ChessPosition(char column, int row) {
             this.column = column;
             this.row = row;
         }
