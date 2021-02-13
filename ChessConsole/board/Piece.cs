@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace board {
-    class Piece {
+    abstract class Piece {
         public Position position { get; set; }
         public Color color { get; protected set; }
         public int movesMade { get; protected set; }
@@ -19,5 +19,7 @@ namespace board {
         public void incrementMovesMade() {
             movesMade++;
         }
+
+        public abstract bool[,] possibleMoves();
     }
 }

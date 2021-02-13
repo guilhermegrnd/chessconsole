@@ -24,9 +24,9 @@ namespace chess {
         }
 
         private void placePieces() {
-            board.placePiece(new Rook(board, Color.White), new ChessPosition('C', 1).toPosition());
-            board.placePiece(new Rook(board, Color.White), new ChessPosition('C', 2).toPosition());
-            board.placePiece(new Rook(board, Color.White), new ChessPosition('E', 2).toPosition());
+            board.placePiece(new Rook(board, Color.Black), new ChessPosition('C', 1).toPosition());
+            board.placePiece(new Rook(board, Color.Black), new ChessPosition('C', 2).toPosition());
+            board.placePiece(new King(board, Color.White), new ChessPosition('E', 2).toPosition());
             board.placePiece(new Rook(board, Color.White), new ChessPosition('E', 1).toPosition());
         }
     }

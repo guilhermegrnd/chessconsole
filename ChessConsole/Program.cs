@@ -17,6 +17,12 @@ namespace ChessConsole {
                     Console.Write("Origem: ");
                     Position origin = Display.getChessPosition().toPosition();
 
+                    bool[,] possibleMoves = match.board.piece(origin).possibleMoves();
+
+                    Console.Clear();
+                    Display.printBoard(match.board, possibleMoves);
+
+                    Console.WriteLine();
                     Console.Write("Destino: ");
                     Position destination = Display.getChessPosition().toPosition();
 
