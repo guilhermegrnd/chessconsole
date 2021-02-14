@@ -20,6 +20,20 @@ namespace board {
             movesMade++;
         }
 
+        public bool existsPossibleMovements() {
+            bool[,] possibleMovementsMatrix = possibleMoves();
+            for (int i = 0; i < board.rows; i++) {
+                for(int j = 0; j < board.columns; j++) {
+                    if (possibleMovementsMatrix[i,j]) return true;
+                }
+            }
+            return false;
+        }
+
+        public bool canMoveTo(Position pos) {
+            return possibleMoves()[pos.row,pos.column];
+        }
+
         public abstract bool[,] possibleMoves();
     }
 }

@@ -4,8 +4,8 @@ using board;
 namespace chess {
     class ChessMatch {
         public Board board { get; private set; }
-        private int move;
-        private Color currentPlayer;
+        public int move { get; private set; }
+        public  Color currentPlayer { get; private set; }
         public bool gameOver { get; private set; }
 
         public ChessMatch() {
@@ -21,6 +21,38 @@ namespace chess {
             p.incrementMovesMade();
             Piece pieceTaken = board.takePiece(destination);
             board.placePiece(p, destination);
+        }
+
+        public void executePlay(Position origin, Position destination) {
+            executeMove(origin, destination);
+            move++;
+            changeCurrentPlayer();
+        }
+
+        public void validOriginPosition(Position pos) {
+            if (board.piece(pos) == null) {
+                throw new BoardException("Não existe peça na posição de origem escolhida!");
+            }
+            if (board.piece(pos).color != currentPlayer) {
+                throw new BoardException("A peça de origem escolhida não é sua!");
+            }
+            if (!board.piece(pos).existsPossibleMovements()) {
+                throw new BoardException("Não há movimentos possíveis para a peça de origem escolhida!");
+            }
+        }
+
+        public void validDestinationPosition(Position origin, Position destination) {
+            if(!board.piece(origin).canMoveTo(destination)) {
+                throw new BoardException("Posição de destino inválida!");
+            }
+        }
+
+        private void changeCurrentPlayer() {
+            if(currentPlayer == Color.White) {
+                currentPlayer = Color.Black;
+            } else {
+                currentPlayer = Color.White;
+            }
         }
 
         private void placePieces() {

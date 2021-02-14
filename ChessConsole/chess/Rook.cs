@@ -22,37 +22,37 @@ namespace chess {
             //NORTH
             pos.changePosition(position.row - 1, position.column);
             while (board.validPosition(pos) && validateMove(pos)) {
+                boolMatrix[pos.row, pos.column] = true;
                 if (board.piece(pos) != null && board.piece(pos).color != color) {
                     break;
                 }
-                boolMatrix[pos.row, pos.column] = true;
                 pos.row--;
             }
             //EAST
             pos.changePosition(position.row, position.column + 1);
             while (board.validPosition(pos) && validateMove(pos)) {
+                boolMatrix[pos.row, pos.column] = true;
                 if (board.piece(pos) != null && board.piece(pos).color != color) {
                     break;
                 }
-                boolMatrix[pos.row, pos.column] = true;
                 pos.column++;
             }
             //SOUTH
             pos.changePosition(position.row + 1, position.column);
             while (board.validPosition(pos) && validateMove(pos)) {
+                boolMatrix[pos.row, pos.column] = true;
                 if (board.piece(pos) != null && board.piece(pos).color != color) {
                     break;
                 }
-                boolMatrix[pos.row, pos.column] = true;
                 pos.row++;
             }
             //WEST
             pos.changePosition(position.row, position.column - 1);
             while (board.validPosition(pos) && validateMove(pos)) {
+                boolMatrix[pos.row, pos.column] = true;
                 if (board.piece(pos) != null && board.piece(pos).color != color) {
                     break;
                 }
-                boolMatrix[pos.row, pos.column] = true;
                 pos.column--;
             }
 
