@@ -37,7 +37,6 @@ namespace ChessConsole {
                     }
                     catch (BoardException e) {
                         Console.WriteLine(e.Message);
-                        Console.ReadLine();
                     }
                 }
 
