@@ -51,14 +51,18 @@ namespace chess {
                 throw new BoardException("Você não pode se colocar em xeque!");
             }
 
-            if (inCheck(Adversary(currentPlayer))) {
+            if (inCheck(adversary(currentPlayer))) {
                 check = true;
             } else {
                 check = false;
             }
 
-            move++;
-            changeCurrentPlayer();
+            if(checkMate(adversary(currentPlayer))) {
+                gameOver = true;
+            } else {
+                move++;
+                changeCurrentPlayer();
+            }
         }
 
         public void validOriginPosition(Position pos) {
@@ -108,7 +112,7 @@ namespace chess {
             return aux;
         }
 
-        private Color Adversary(Color color) {
+        private Color adversary(Color color) {
             if(color == Color.White) {
                 return Color.Black;
             } else {
@@ -131,13 +135,38 @@ namespace chess {
                 throw new BoardException("Não tem rei da cor " + color + " no tabuleiro!");
             }
 
-            foreach(Piece x in getPiecesByColor(Adversary(color))) {
+            foreach(Piece x in getPiecesByColor(adversary(color))) {
                 bool[,] matrix = x.possibleMoves();
                 if(matrix[king.position.row,king.position.column]) {
                     return true;
                 }
             }
             return false;
+        }
+
+        public bool checkMate(Color color) {
+            if(!inCheck(color)) {
+                return false;
+            }
+            foreach(Piece x in getPiecesByColor(color)) {
+                bool[,] matrix = x.possibleMoves();
+                for(int i = 0; i < board.rows; i++) {
+                    for(int j = 0; j < board.columns; j++) {
+                        if(matrix[i, j]) {
+                            Position origin = x.position;
+                            Position destination = new Position(i, j);
+                            Piece pieceTaken = executeMove(origin, destination);
+                            bool checkTest = inCheck(color);
+                            undoMove(origin, destination, pieceTaken);
+                            if(!checkTest) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return true;
         }
 
         public void placePiece(char column, int row, Piece piece) {

@@ -12,9 +12,14 @@ namespace ChessConsole {
             printPiecesTaken(match);
             Console.WriteLine();
             Console.WriteLine("Turno: " + match.move);
-            Console.WriteLine("Aguardando Jogada: " + match.currentPlayer);
-            if(match.check) {
-                Console.WriteLine("Xeque!");
+            if(!match.gameOver) {
+                Console.WriteLine("Aguardando Jogada: " + match.currentPlayer);
+                if (match.check) {
+                    Console.WriteLine("XEQUE!");
+                }
+            } else {
+                Console.WriteLine("XEQUEMATE!");
+                Console.WriteLine("Vencedor: " + match.currentPlayer);
             }
         }
 
