@@ -78,9 +78,13 @@ namespace ChessConsole {
             if(s.Equals("")) {
                 throw new BoardException("Digite uma posição!");
             }
-            char column = s[0];
-            int row = int.Parse(s[1] + "");
-            return new ChessPosition(column, row);
+            try {
+                char column = s[0];
+                int row = int.Parse(s[1] + "");
+                return new ChessPosition(column, row);
+            } catch(Exception e) {
+                throw new BoardException("Digite uma posição!");
+            }
         }
 
         public static void printPiece(Piece piece) {

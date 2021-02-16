@@ -34,6 +34,9 @@ namespace ChessConsole {
                         Console.WriteLine(e.Message);
                     }
                 }
+                Console.Clear();
+                Display.printMatch(match);
+                Console.ReadLine();
 
             } catch(BoardException e) {
                 Console.WriteLine(e.Message);

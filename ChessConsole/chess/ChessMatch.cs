@@ -40,7 +40,7 @@ namespace chess {
                 board.placePiece(pieceTaken, destination);
                 taken.Remove(pieceTaken);
             }
-            board.placePiece(pieceTaken, origin);
+            board.placePiece(piece, origin);
         }
 
         public void executePlay(Position origin, Position destination) {

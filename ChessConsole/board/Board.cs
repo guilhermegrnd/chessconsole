@@ -15,7 +15,12 @@
         }
 
         public Piece piece(Position pos) {
-            return pieces[pos.row, pos.column];
+            try {
+                return pieces[pos.row, pos.column];
+            }
+            catch (System.Exception e) {
+                throw new BoardException("Digite uma posição!");
+            }
         }
 
         public bool piecePlaced(Position pos) {
