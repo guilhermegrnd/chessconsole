@@ -78,7 +78,7 @@ namespace chess {
         }
 
         public void validDestinationPosition(Position origin, Position destination) {
-            if(!board.piece(origin).canMoveTo(destination)) {
+            if(!board.piece(origin).possibleMove(destination)) {
                 throw new BoardException("Posição de destino inválida!");
             }
         }
