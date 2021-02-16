@@ -75,6 +75,9 @@ namespace ChessConsole {
 
         public static ChessPosition getChessPosition() {
             string s = Console.ReadLine();
+            if(s.Equals("")) {
+                throw new BoardException("Digite uma posição!");
+            }
             char column = s[0];
             int row = int.Parse(s[1] + "");
             return new ChessPosition(column, row);

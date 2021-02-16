@@ -1,12 +1,12 @@
 ﻿using board;
 
 namespace chess {
-    class Rook : Piece {
-        public Rook(Board board, Color color) : base(board, color) {
+    class Bishop : Piece {
+        public Bishop(Board board, Color color) : base(board, color) {
         }
 
         public override string ToString() {
-            return "r";
+            return "b";
         }
 
         private bool validateMove(Position pos) {
@@ -19,41 +19,41 @@ namespace chess {
 
             Position pos = new Position(0, 0);
 
-            //NORTH
-            pos.changePosition(position.row - 1, position.column);
+            //NORTHEAST
+            pos.changePosition(position.row - 1, position.column + 1);
             while (board.validPosition(pos) && validateMove(pos)) {
                 boolMatrix[pos.row, pos.column] = true;
                 if (board.piece(pos) != null && board.piece(pos).color != color) {
                     break;
                 }
-                pos.changePosition(pos.row - 1, pos.column);
+                pos.changePosition(pos.row - 1, pos.column + 1);
             }
-            //EAST
-            pos.changePosition(position.row, position.column + 1);
+            //SOUTHEAST
+            pos.changePosition(position.row + 1, position.column + 1);
             while (board.validPosition(pos) && validateMove(pos)) {
                 boolMatrix[pos.row, pos.column] = true;
                 if (board.piece(pos) != null && board.piece(pos).color != color) {
                     break;
                 }
-                pos.changePosition(pos.row, pos.column + 1);
+                pos.changePosition(pos.row + 1, pos.column + 1);
             }
-            //SOUTH
-            pos.changePosition(position.row + 1, position.column);
+            //SOUTHWEST
+            pos.changePosition(position.row + 1, position.column - 1);
             while (board.validPosition(pos) && validateMove(pos)) {
                 boolMatrix[pos.row, pos.column] = true;
                 if (board.piece(pos) != null && board.piece(pos).color != color) {
                     break;
                 }
-                pos.changePosition(pos.row + 1, pos.column);
+                pos.changePosition(pos.row + 1, pos.column - 1);
             }
-            //WEST
-            pos.changePosition(position.row, position.column - 1);
+            //NORTHWEST
+            pos.changePosition(position.row - 1, position.column - 1);
             while (board.validPosition(pos) && validateMove(pos)) {
                 boolMatrix[pos.row, pos.column] = true;
                 if (board.piece(pos) != null && board.piece(pos).color != color) {
                     break;
                 }
-                pos.changePosition(pos.row, pos.column - 1);
+                pos.changePosition(pos.row - 1, pos.column - 1);
             }
 
             return boolMatrix;

@@ -11,12 +11,7 @@ namespace ChessConsole {
                 while(!match.gameOver) {
                     try {
                         Console.Clear();
-                        Display.printBoard(match.board);
-
-                        Console.WriteLine();
-                        Console.WriteLine("Turno: " + match.move);
-                        Console.WriteLine("Aguardando Jogada: " + match.currentPlayer);
-
+                        Display.printMatch(match);
                         Console.WriteLine();
 
                         Console.Write("Origem: ");

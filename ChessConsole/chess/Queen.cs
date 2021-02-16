@@ -1,12 +1,12 @@
 ﻿using board;
 
 namespace chess {
-    class Rook : Piece {
-        public Rook(Board board, Color color) : base(board, color) {
+    class Queen : Piece {
+        public Queen(Board board, Color color) : base(board, color) {
         }
 
         public override string ToString() {
-            return "r";
+            return "Q";
         }
 
         private bool validateMove(Position pos) {
@@ -19,6 +19,42 @@ namespace chess {
 
             Position pos = new Position(0, 0);
 
+            //NORTHEAST
+            pos.changePosition(position.row - 1, position.column + 1);
+            while (board.validPosition(pos) && validateMove(pos)) {
+                boolMatrix[pos.row, pos.column] = true;
+                if (board.piece(pos) != null && board.piece(pos).color != color) {
+                    break;
+                }
+                pos.changePosition(pos.row - 1, pos.column + 1);
+            }
+            //SOUTHEAST
+            pos.changePosition(position.row + 1, position.column + 1);
+            while (board.validPosition(pos) && validateMove(pos)) {
+                boolMatrix[pos.row, pos.column] = true;
+                if (board.piece(pos) != null && board.piece(pos).color != color) {
+                    break;
+                }
+                pos.changePosition(pos.row + 1, pos.column + 1);
+            }
+            //SOUTHWEST
+            pos.changePosition(position.row + 1, position.column - 1);
+            while (board.validPosition(pos) && validateMove(pos)) {
+                boolMatrix[pos.row, pos.column] = true;
+                if (board.piece(pos) != null && board.piece(pos).color != color) {
+                    break;
+                }
+                pos.changePosition(pos.row + 1, pos.column - 1);
+            }
+            //NORTHWEST
+            pos.changePosition(position.row - 1, position.column - 1);
+            while (board.validPosition(pos) && validateMove(pos)) {
+                boolMatrix[pos.row, pos.column] = true;
+                if (board.piece(pos) != null && board.piece(pos).color != color) {
+                    break;
+                }
+                pos.changePosition(pos.row - 1, pos.column - 1);
+            }
             //NORTH
             pos.changePosition(position.row - 1, position.column);
             while (board.validPosition(pos) && validateMove(pos)) {
