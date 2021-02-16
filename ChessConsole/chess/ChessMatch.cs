@@ -9,6 +9,7 @@ namespace chess {
         public bool gameOver { get; private set; }
         private HashSet<Piece> pieces;
         private HashSet<Piece> taken;
+        public bool check { get; private set; }
 
         public ChessMatch() {
             board = new Board(8, 8);
@@ -17,10 +18,11 @@ namespace chess {
             gameOver = false;
             pieces = new HashSet<Piece>();
             taken = new HashSet<Piece>();
+            check = false;
             placePieces();
         }
 
-        public void executeMove(Position origin, Position destination) {
+        public Piece executeMove(Position origin, Position destination) {
             Piece p = board.takePiece(origin);
             p.incrementMovesMade();
             Piece pieceTaken = board.takePiece(destination);
@@ -28,10 +30,33 @@ namespace chess {
             if(pieceTaken != null) {
                 taken.Add(pieceTaken);
             }
+            return pieceTaken;
+        }
+
+        public void undoMove(Position origin, Position destination, Piece pieceTaken) {
+            Piece piece = board.takePiece(destination);
+            piece.decrementMovesMade();
+            if(pieceTaken != null) {
+                board.placePiece(pieceTaken, destination);
+                taken.Remove(pieceTaken);
+            }
+            board.placePiece(pieceTaken, origin);
         }
 
         public void executePlay(Position origin, Position destination) {
-            executeMove(origin, destination);
+            Piece pieceTaken = executeMove(origin, destination);
+
+            if(inCheck(currentPlayer)) {
+                undoMove(origin,destination,pieceTaken);
+                throw new BoardException("Você não pode se colocar em xeque!");
+            }
+
+            if (inCheck(Adversary(currentPlayer))) {
+                check = true;
+            } else {
+                check = false;
+            }
+
             move++;
             changeCurrentPlayer();
         }
@@ -81,6 +106,38 @@ namespace chess {
             }
             aux.ExceptWith(getPiecesByColor(color));
             return aux;
+        }
+
+        private Color Adversary(Color color) {
+            if(color == Color.White) {
+                return Color.Black;
+            } else {
+                return Color.White;
+            }
+        }
+
+        private Piece getKing(Color color) {
+            foreach (Piece x in getPiecesByColor(color)) {
+                if (x is King) {
+                    return x;
+                }
+            }
+            return null;
+        }
+
+        public bool inCheck(Color color) {
+            Piece king = getKing(color);
+            if(king == null) {
+                throw new BoardException("Não tem rei da cor " + color + " no tabuleiro!");
+            }
+
+            foreach(Piece x in getPiecesByColor(Adversary(color))) {
+                bool[,] matrix = x.possibleMoves();
+                if(matrix[king.position.row,king.position.column]) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void placePiece(char column, int row, Piece piece) {

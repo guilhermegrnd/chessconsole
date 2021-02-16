@@ -20,6 +20,10 @@ namespace board {
             movesMade++;
         }
 
+        public void decrementMovesMade() {
+            movesMade--;
+        }
+
         public bool existsPossibleMovements() {
             bool[,] possibleMovementsMatrix = possibleMoves();
             for (int i = 0; i < board.rows; i++) {
