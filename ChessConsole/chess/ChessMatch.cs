@@ -30,17 +30,52 @@ namespace chess {
             if(pieceTaken != null) {
                 taken.Add(pieceTaken);
             }
+
+            //SHORT CASTLE
+            if (p is King && destination.column == origin.column + 2) {
+                Position originRook = new Position(origin.row, origin.column + 3);
+                Position destinationRook = new Position(origin.row, origin.column + 1);
+                Piece rook = board.takePiece(originRook);
+                rook.incrementMovesMade();
+                board.placePiece(rook, destinationRook);
+            }
+            //LONG CASTLE
+            if (p is King && destination.column == origin.column - 2) {
+                Position originRook = new Position(origin.row, origin.column - 4);
+                Position destinationRook = new Position(origin.row, origin.column - 1);
+                Piece rook = board.takePiece(originRook);
+                rook.incrementMovesMade();
+                board.placePiece(rook, destinationRook);
+            }
+
             return pieceTaken;
         }
 
         public void undoMove(Position origin, Position destination, Piece pieceTaken) {
-            Piece piece = board.takePiece(destination);
-            piece.decrementMovesMade();
+            Piece p = board.takePiece(destination);
+            p.decrementMovesMade();
             if(pieceTaken != null) {
                 board.placePiece(pieceTaken, destination);
                 taken.Remove(pieceTaken);
             }
-            board.placePiece(piece, origin);
+            board.placePiece(p, origin);
+
+            //SHORT CASTLE
+            if (p is King && destination.column == origin.column + 2) {
+                Position originRook = new Position(origin.row, origin.column + 3);
+                Position destinationRook = new Position(origin.row, origin.column + 1);
+                Piece rook = board.takePiece(destinationRook);
+                rook.decrementMovesMade();
+                board.placePiece(rook, originRook);
+            }
+            //LONG CASTLE
+            if (p is King && destination.column == origin.column - 2) {
+                Position originRook = new Position(origin.row, origin.column - 4);
+                Position destinationRook = new Position(origin.row, origin.column - 1);
+                Piece rook = board.takePiece(destinationRook);
+                rook.decrementMovesMade();
+                board.placePiece(rook, originRook);
+            }
         }
 
         public void executePlay(Position origin, Position destination) {
@@ -179,7 +214,7 @@ namespace chess {
             placePiece('B', 1, new Knight(board, Color.White));
             placePiece('C', 1, new Bishop(board, Color.White));
             placePiece('D', 1, new Queen(board, Color.White));
-            placePiece('E', 1, new King(board, Color.White));
+            placePiece('E', 1, new King(board, Color.White, this));
             placePiece('F', 1, new Bishop(board, Color.White));
             placePiece('G', 1, new Knight(board, Color.White));
             placePiece('H', 1, new Rook(board, Color.White));
@@ -196,7 +231,7 @@ namespace chess {
             placePiece('B', 8, new Knight(board, Color.Black));
             placePiece('C', 8, new Bishop(board, Color.Black));
             placePiece('D', 8, new Queen(board, Color.Black));
-            placePiece('E', 8, new King(board, Color.Black));
+            placePiece('E', 8, new King(board, Color.Black, this));
             placePiece('F', 8, new Bishop(board, Color.Black));
             placePiece('G', 8, new Knight(board, Color.Black));
             placePiece('H', 8, new Rook(board, Color.Black));
