@@ -118,6 +118,19 @@ namespace chess {
                 throw new BoardException("Você não pode se colocar em xeque!");
             }
 
+            Piece p = board.piece(destination);
+
+            //PROMOTION
+            if(p is Pawn) {
+                if((p.color == Color.White && destination.row == 0) || (p.color == Color.Black && destination.row == 7)) {
+                    p = board.takePiece(destination);
+                    pieces.Remove(p);
+                    Piece queen = new Queen(board, p.color);
+                    board.placePiece(queen, destination);
+                    pieces.Add(queen);
+                }
+            }
+
             if (inCheck(adversary(currentPlayer))) {
                 check = true;
             } else {
@@ -132,8 +145,7 @@ namespace chess {
             }
 
             //EN PASSANT
-            Piece p = board.piece(destination);
-            if (p is Pawn && (destination.row == origin.row - 2 && destination.row == origin.row + 2)) {
+            if (p is Pawn && (destination.row == origin.row - 2 || destination.row == origin.row + 2)) {
                 vulnerableEnPassant = p;
             } else {
                 vulnerableEnPassant = null;
